@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "jsx": "react",
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "outDir": "./extension",
+        "rootDir": "./src/ts",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/ts/*"]
+        },
+        "sourceMap": false,
+        "resolveJsonModule": true,
+        "lib": ["ESNext", "DOM"]
+    },
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/declare/globals.d.ts", "src/**/*.jpg", "src/**/*.png", "src/**/*.gif", "src/**/*.svg", "src/**/*.json"],
+    "exclude": ["node_modules"]
+}
