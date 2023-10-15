@@ -1,2 +1,2 @@
 # webosc-repeater
-WebAudio API noise application
+WebAudio API noise application. Work in progress
