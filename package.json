@@ -1,29 +1,24 @@
 {
-  "name": "0_mono_web_synth",
-  "version": "1.0.0",
-  "description": "Monophonic Browser Synth",
-  "main": "index.tsx",
+  "name": "portfolio",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "test",
-    "start": "webpack serve --watch --mode=development --devtool=inline-source-map"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "keywords": [
-    "WebAudioAPI"
-  ],
-  "author": "Gabe J",
-  "license": "MIT",
+  "dependencies": {
+    "react": "^18",
+    "react-dom": "^18",
+    "next": "13.5.4"
+  },
   "devDependencies": {
-    "css-loader": "^6.8.1",
-    "file-loader": "^6.2.0",
-    "html-webpack-plugin": "^5.5.3",
-    "mini-css-extract-plugin": "^2.7.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sass": "^1.68.0",
-    "sass-loader": "^13.3.2",
-    "ts-loader": "^9.4.4",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "13.5.4"
   }
 }

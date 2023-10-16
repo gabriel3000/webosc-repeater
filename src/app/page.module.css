@@ -1,0 +1,28 @@
+.main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 60px 10px 10px 10px;
+
+}
+.subheading {
+  padding: 10px 0 30px 0;
+}
+.job {
+  padding-bottom: 20px;
+}
+/* Mobile */
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: 1fr;
+    margin-bottom: 120px;
+    max-width: 320px;
+    text-align: center;
+  }
+}
+
+/* Tablet and Smaller Desktop */
+@media (min-width: 701px) and (max-width: 1120px) {
+  .grid {
+    grid-template-columns: repeat(2, 50%);
+  }
+}
