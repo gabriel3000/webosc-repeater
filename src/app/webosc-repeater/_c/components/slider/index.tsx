@@ -42,7 +42,7 @@ export default function Slider({settings}:SliderSettings) {
 
     useEffect(() => {
         setValue(defaultValue);
-    }, []);
+    }, [defaultValue]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newInstrumentParams:any = JSON.parse(JSON.stringify(instrumentParams));
