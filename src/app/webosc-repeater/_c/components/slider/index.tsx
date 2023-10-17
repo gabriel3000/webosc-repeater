@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import style from './slider.module.css';
 import { ReactContext } from '../../context/ReactContextProvider';
 import { Knob } from '../../types';
@@ -38,11 +38,7 @@ export default function Slider({settings}:SliderSettings) {
         knob: k
     } = settings;
 
-    const [value, setValue] = useState(0);
-
-    useEffect(() => {
-        setValue(defaultValue);
-    }, [defaultValue]);
+    const [value, setValue] = useState(defaultValue);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newInstrumentParams:any = JSON.parse(JSON.stringify(instrumentParams));
