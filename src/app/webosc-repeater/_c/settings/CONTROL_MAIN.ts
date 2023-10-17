@@ -1,4 +1,4 @@
-export default [
+const CONTROL_MAIN = [
     {
         knob: 'power',
         type: 'power',
@@ -15,3 +15,4 @@ export default [
         step: 0.01,
     }
 ];
+export default CONTROL_MAIN

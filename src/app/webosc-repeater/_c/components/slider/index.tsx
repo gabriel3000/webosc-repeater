@@ -22,10 +22,6 @@ interface SliderSettings {
 export default function Slider({settings}:SliderSettings) {
     const { instrumentParams, setInstrumentParams } = useContext(ReactContext);
 
-    if (typeof settings === 'undefined') {
-        return null;
-    }
-
     const {
         id,
         labelContent,
