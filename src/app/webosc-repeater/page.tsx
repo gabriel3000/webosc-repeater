@@ -1,5 +1,10 @@
+import App from './_c/App';
+import { ReactContextProvider } from './_c/context/ReactContextProvider';
+
 export default function WebOscRepeater() {
     return (
-        <div>HI</div>
+        <ReactContextProvider>
+            <App />
+        </ReactContextProvider>
     )
 }

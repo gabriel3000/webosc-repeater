@@ -1,0 +1,16 @@
+.modules {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    padding: 60px;
+}
+
+@media (max-width: 768px) {
+    .modules {
+        flex-direction: column;
+        padding: 20px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+}

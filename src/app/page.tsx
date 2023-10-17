@@ -1,4 +1,5 @@
 import styles from './page.module.css'
+import Link from 'next/link'
 
 export default function Home() {
     return (
@@ -35,10 +36,14 @@ export default function Home() {
                             </div> */}
                         </div>
                         <div className={styles.job}>
-                            <h3><a href="https://www.unboundcommerce.com/" target="_blank">Unbound Commerce</a><span> 2012-2014</span></h3>
+                            <h3>Unbound Commerce <span> 2012-2014</span></h3>
                             <p>Providing mobile dedicated e-commerce web sites. <br/> Accounts: Monster Products, Icebreaker, <a href="http://m.finishline.com/" target="_blank">Finishline</a>, Jomashop</p>
                         </div>
                     </div>
+                </div>
+                <div>
+                    <h3>WebAudio Synth Project:</h3>
+                    <Link href="/webosc-repeater">/webosc-repeater</Link>
                 </div>
             </div>
         </main>
