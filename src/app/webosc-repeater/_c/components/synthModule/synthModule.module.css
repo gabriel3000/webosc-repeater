@@ -1,10 +1,5 @@
 .module {
     max-width: 360px;
-    background-color: #ccc;
-    border-right: 2px solid #666;
-    border-top: 2px solid #fff;
-    border-left: 2px solid #fff;
-    border-bottom: 2px solid #666;
     padding: 20px;
 }
 .knob {

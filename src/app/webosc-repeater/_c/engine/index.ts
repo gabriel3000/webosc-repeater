@@ -21,7 +21,7 @@ class engine {
             this.limiter.ratio.value = 20.0; // max compression
             this.limiter.attack.value = 0.005; // 5ms attack
             this.limiter.release.value = 0.050; // 50ms release
-            this.distortion.curve = makeDistortionCurve(300);
+            this.distortion.curve = makeDistortionCurve(400);
             this.distortion.oversample = '4x';
             this.intervals = [
                 null,
@@ -150,6 +150,12 @@ class engine {
         if(i === undefined) return;
         if(this.knobData === undefined) return;
         clearTimeout(this.intervals[i]);
+    }
+    killAll() {
+        this.intervals.forEach((interval) => {
+            clearTimeout(interval);
+        });
+        this.masterGain.disconnect();
     }
 }
 export default new engine();
