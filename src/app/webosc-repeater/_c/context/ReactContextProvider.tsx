@@ -2,7 +2,6 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import engine from '../engine';
 import CONTROL_MODULE from '../settings/CONTROL_MODULE';
-// import CONTROL_MAIN from '../settings/CONTROL_MAIN';
 import { AllInstruments } from "../types";
 
 const instruments = [
