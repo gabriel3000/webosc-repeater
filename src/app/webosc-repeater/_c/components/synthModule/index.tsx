@@ -6,7 +6,7 @@ import RadioGroup from '../radioGroup';
 import Power from '../power';
 import styles from './synthModule.module.css';
 import commonStyles from '../../common/common.module.css';
-import { InstrumentKnobs, Knob } from '../../types';
+import { AllInstruments, InstrumentKnobs, Knob } from '../../types';
 import engine from '../../engine';
 
 interface SynthModuleSettings {
@@ -17,6 +17,7 @@ interface SynthModuleSettings {
 const SynthModule = ({knobs, instrumentIndex}:SynthModuleSettings) => {
     const { instrumentParams, setInstrumentParams } = useContext(ReactContext);
     const [power, setPower] = useState(false);
+    const [sliderValue, setSliderValue] = useState<null | number>(null);
 
     const powerClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         const newInstrumentParams:any = JSON.parse(JSON.stringify(instrumentParams));
@@ -32,6 +33,20 @@ const SynthModule = ({knobs, instrumentIndex}:SynthModuleSettings) => {
             engine.schedule(instrumentIndex);
         } else {
             engine.stop(instrumentIndex);
+        }
+    }
+
+    const handleSliderChangeCallback = (value:number, knobName:string) => {
+        const newInstrumentParams:AllInstruments = JSON.parse(JSON.stringify(instrumentParams));
+        if(typeof newInstrumentParams === 'object') {
+            const obj = newInstrumentParams[instrumentIndex].find((knob:Knob) => {
+                return knob.knob === knobName;
+            });
+            if(obj !== undefined) {
+                obj.value = value;
+            }
+            setInstrumentParams(newInstrumentParams);
+            setSliderValue(value);
         }
     }
 
@@ -61,10 +76,11 @@ const SynthModule = ({knobs, instrumentIndex}:SynthModuleSettings) => {
                                     labelContent: knob.labelContent,
                                     min: knob.min,
                                     max: knob.max,
-                                    defaultValue: knob.value,
+                                    value: sliderValue || knob.value,
                                     step: knob.step,
                                     knobIndex: knobIndex,
                                     instrumentIndex: instrumentIndex,
+                                    handleSliderChangeCallback: handleSliderChangeCallback,
                                 }
                             }
                         />

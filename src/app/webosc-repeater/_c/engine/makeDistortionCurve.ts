@@ -1,5 +1,5 @@
 export const makeDistortionCurve = (amount:number) => {
-    var k = typeof amount === 'number' ? amount : 50,
+    var k = typeof amount === 'number' ? amount : 0,
         n_samples = 44100,
         curve = new Float32Array(n_samples),
         deg = Math.PI / 180,

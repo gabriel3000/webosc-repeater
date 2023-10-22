@@ -74,7 +74,7 @@ class engine {
             if(AC === null) return;
 
             const now = AC.currentTime
-            const distortion = this.distortion;
+            // const distortion = this.distortion;
             const limiter = this.limiter;
             const masterGain = this.masterGain;
         
@@ -108,9 +108,13 @@ class engine {
             envelope.gain.linearRampToValueAtTime(gain, now + attack + sustain);
             envelope.gain.linearRampToValueAtTime(0, now + attack + sustain + decay);
         
-            gainNode.connect(distortion);
-            lfoGainNode.connect(distortion);
-            distortion.connect(envelope);
+            // gainNode.connect(distortion);
+            // lfoGainNode.connect(distortion);
+            // distortion.connect(envelope);
+
+
+            gainNode.connect(envelope);
+            lfoGainNode.connect(envelope);
             envelope.connect(limiter);
             limiter.connect(masterGain);
             masterGain.connect(AC.destination);

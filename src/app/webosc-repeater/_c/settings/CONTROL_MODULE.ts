@@ -78,10 +78,10 @@ const CONTROL_MODULE = [
         knob: 'lfoFrequency',
         type: 'slider',
         labelContent: 'lfo frequency',
-        value: 440,
+        value: 4,
         min: 0,
-        max: 3000,
-        step: 1,
+        max: 50,
+        step: 0.02,
     },
     {
         knob: 'lfoGain',
