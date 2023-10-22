@@ -25,7 +25,7 @@ const MainDestinationControls = () => {
 
     return (
         <div className={styles.wrapper}>
-            <div className={`${styles.killAll} ${commonStyles.defaultPanelColoring}`}>
+            <div className={`${styles.killAll} ${commonStyles.defaultPanelColoring} ${power ? styles.instrumentIsOn : null}`}>
                 <span>Kill All</span>
                 <Power settings={{
                     powerClickHandler: () => { 
