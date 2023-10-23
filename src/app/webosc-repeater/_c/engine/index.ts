@@ -1,4 +1,5 @@
 import { makeDistortionCurve } from './makeDistortionCurve';
+import TapeDelay from './tapeDelayClass';
 import { InstrumentKnobs, AllInstruments } from '../types';
 
 class engine {
@@ -6,8 +7,10 @@ class engine {
     limiter!: DynamicsCompressorNode;
     masterGain!: GainNode;
     distortion!: WaveShaperNode;
+    delay!: DelayNode;
     knobData: AllInstruments | undefined;
     intervals!: any[];
+    tape: TapeDelay | undefined;
     constructor() {
         if (typeof window === 'undefined') {
             return;
@@ -23,6 +26,7 @@ class engine {
             this.limiter.release.value = 0.050; // 50ms release
             this.distortion.curve = makeDistortionCurve(400);
             this.distortion.oversample = '4x';
+            this.tape = new TapeDelay(this.AC, 0.4, 0.4, 0.8);
             this.intervals = [
                 null,
                 null,
@@ -101,7 +105,6 @@ class engine {
             oscillator.frequency.exponentialRampToValueAtTime(freq3, (AC.currentTime + attack + sustain + decay));
         
             gainNode.connect(envelope);
-            lfoGainNode.connect(envelope);
         
             envelope.gain.setValueAtTime(0, now);
             envelope.gain.linearRampToValueAtTime(gain, now + attack);
@@ -111,14 +114,27 @@ class engine {
             // gainNode.connect(distortion);
             // lfoGainNode.connect(distortion);
             // distortion.connect(envelope);
-
-
-            gainNode.connect(envelope);
-            lfoGainNode.connect(envelope);
             envelope.connect(limiter);
+
+
+            /* tape delay - turn off */
+
+            /*
+
+            if(this.tape) {
+                envelope.connect(this.tape.input);
+                this.tape.output.connect(limiter);
+            }
+
+            */
+
             limiter.connect(masterGain);
             masterGain.connect(AC.destination);
         
+
+
+            
+
             oscillator.start(now);
             oscillatorLfo.start(now);
             oscillator.stop(AC.currentTime + attack + sustain + decay);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './mainDestinationControls.module.css';
 import commonStyles from '../../common/common.module.css';
 import Power from '../power';
+import TapeDelay from '../tapeDelay';
 import engine from '../../engine';
 import { ReactContext } from '../../context/ReactContextProvider';
 
@@ -45,6 +46,7 @@ const MainDestinationControls = () => {
                     power: power,
                 }} />
             </div>
+            {/* <TapeDelay /> */}
         </div>
     )
 }
