@@ -2,6 +2,7 @@
 import React, { useContext } from 'react';
 import { ReactContext } from './context/ReactContextProvider';
 import SynthModule from './components/synthModule';
+import TapeDelay from './components/tapeDelay';
 import MainDestinationControls from './components/mainDestinationControls';
 import styles from './app.module.css';
 
@@ -20,6 +21,7 @@ export default function App() {
                         />
                     )
                 })}
+                <TapeDelay />
             </div>
         </div>
     )

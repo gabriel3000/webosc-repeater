@@ -9,9 +9,12 @@
 }
 
 @media (max-width: 768px) {
+    .wrapper {
+        margin-top: 20px;
+    }
     .modules {
+        padding: 0px 20px 60px;
         flex-direction: column;
-        padding: 20px;
         justify-content: center;
         align-items: center;
         width: 100%;

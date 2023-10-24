@@ -1,8 +1,6 @@
 "use client"
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import style from './slider.module.css';
-import { ReactContext } from '../../context/ReactContextProvider';
-import { Knob } from '../../types';
 
 interface SliderSettings {
     settings: {
@@ -12,10 +10,9 @@ interface SliderSettings {
         max: number;
         step: number;
         value: number;
-        knobIndex: number;
-        instrumentIndex: number;
         knob: string;
-        handleSliderChangeCallback: (value:number, knobName:string) => void;
+        key?: number;
+        handleSliderChangeCallback: (value:number, knobName?:string) => void;
     };
 }
 
@@ -27,8 +24,7 @@ export default function Slider({settings}:SliderSettings) {
         min,
         max,
         step,
-        value,
-        knobIndex,
+        key,
         handleSliderChangeCallback
     } = settings;
 
@@ -39,7 +35,7 @@ export default function Slider({settings}:SliderSettings) {
     }
 
     return (
-        <div className={style.sliderWrap} key={knobIndex}>
+        <div className={style.sliderWrap} key={key}>
             <label className={style.sliderLabel} htmlFor={`slider-${id}`}><span>{labelContent}</span><span>{localValue}</span></label>
             <input className={style.slider} type="range" max={max} min={min} step={step} value={localValue} onChange={handleChange} id={`slider-${id}`} />
         </div>

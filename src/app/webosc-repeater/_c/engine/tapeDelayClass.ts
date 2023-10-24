@@ -1,20 +1,15 @@
 export default class TapeDelay {
-
     audioContext:AudioContext;
-    delayTime:number;
-    feedback:number;
-    wetLevel:number;
     input:GainNode;
     output:GainNode;
     delay:DelayNode;
     feedbackNode:GainNode;
     wetLevelNode:GainNode;
+    on: boolean;
 
-    constructor(audioContext:AudioContext, delayTime:number, feedback:number, wetLevel:number) {
-        this.audioContext = audioContext;
-        this.delayTime = delayTime;
-        this.feedback = feedback;
-        this.wetLevel = wetLevel;
+    constructor(AC:AudioContext) {
+        this.audioContext = AC;
+
         this.input = this.audioContext.createGain();
         this.output = this.audioContext.createGain();
         this.delay = this.audioContext.createDelay();
@@ -26,8 +21,26 @@ export default class TapeDelay {
         this.delay.connect(this.wetLevelNode);
         this.feedbackNode.connect(this.delay);
         this.wetLevelNode.connect(this.output);
-        this.delay.delayTime.value = this.delayTime;
-        this.feedbackNode.gain.value = this.feedback;
-        this.wetLevelNode.gain.value = this.wetLevel;
+
+        this.delay.delayTime.value = 0.04;
+        this.feedbackNode.gain.value = 0.9;
+        this.wetLevelNode.gain.value = 0.9;
+
+        this.on = false;
+    }
+
+    power(bool:boolean) {
+        this.on = bool;
+    }
+
+    setDelayTime(value:number) {
+        this.delay.delayTime.value = value;
+    }
+    setFeedback(value:number) {
+        this.feedbackNode.gain.value = value;
+    }
+    setWet(value:number) {
+        this.wetLevelNode.gain.value = value;
     }
 }
+

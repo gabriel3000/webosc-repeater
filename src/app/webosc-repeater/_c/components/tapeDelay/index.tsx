@@ -1,57 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import style from './tapeDelay.module.css';
 import defaultStyle from '../../common/common.module.css';
 import Power from '../power';
 import Slider from '../slider';
+import engine from '../../engine';
 
 const TapeDelay = () => {
+
+    const [power, setPower] = useState(false);
+    const powerClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setPower(!power);
+        engine?.tape?.power(!power);
+    }
+
+
     const wrapperClasses = classNames({
         [style.wrapper]: true,
         [defaultStyle.defaultPanelColoring]: true,
     });
+
     return (
         <div className={wrapperClasses}>
-            <h2>TapeDelay</h2>
-            <Power settings={{
-                powerClickHandler: () => { console.log('powerClickHandler') },
-                power: true,
-            }} />
+            <div className={style.top}>
+                <Power settings={{
+                    powerClickHandler: powerClickHandler,
+                    power: power,
+                    powerCopy: [ 'tape delay: on', 'tape delay: off' ],
+                }} />
+            </div>
             <Slider settings={{
                 knob: 'delay-time',
                 id: 'delay-time',
                 labelContent: 'delay time',
                 min: 0,
-                max: 100,
-                value: 0,
-                step: 1,
-                knobIndex: 0,
-                instrumentIndex: 0,
-                handleSliderChangeCallback: () => { console.log('handleSliderChangeCallback') },
+                max: 2,
+                value: 0.4,
+                step: 0.01,
+                handleSliderChangeCallback: (value) => {
+                    engine.tape?.setDelayTime(value);
+                },
             }} />
             <Slider settings={{
                 knob: 'delay-wet',
                 id: 'delay-wet',
                 labelContent: 'wet',
                 min: 0,
-                max: 100,
-                value: 0,
-                step: 1,
-                knobIndex: 0,
-                instrumentIndex: 0,
-                handleSliderChangeCallback: () => { console.log('handleSliderChangeCallback') },
+                max: 1,
+                value: 0.4,
+                step: 0.001,
+                handleSliderChangeCallback: (value) => {
+                    engine.tape?.setWet(value);
+                },
             }} />
             <Slider settings={{
                 knob: 'delay-feedback',
                 id: 'delay-feedback',
                 labelContent: 'feedback',
                 min: 0,
-                max: 100,
-                value: 0,
-                step: 1,
-                knobIndex: 0,
-                instrumentIndex: 0,
-                handleSliderChangeCallback: () => { console.log('handleSliderChangeCallback') },
+                max: 1,
+                value: 0.4,
+                step: 0.001,
+                handleSliderChangeCallback: (value) => {
+                    engine.tape?.setFeedback(value);
+                },
             }} />
 
 

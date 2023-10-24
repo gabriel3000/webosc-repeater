@@ -7,6 +7,7 @@ interface PowerProps {
     settings: {
         powerClickHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
         power: boolean;
+        powerCopy?: [ string, string ];
     };
 }
 
@@ -16,7 +17,10 @@ export default function Power({ settings }: PowerProps) {
         [style.ON]: power,
         [style.power]: true,
     });
+
+    const onOffCopy = settings.powerCopy ? settings.powerCopy : [ 'ON', 'OFF' ];
+
     return (
-        <button className={buttonClasses} onClick={(e)=>{ powerClickHandler(e)}}>{power ? 'ON' : 'OFF'}</button>
+        <button className={buttonClasses} onClick={(e)=>{ powerClickHandler(e)}}>{power ? onOffCopy[0] : onOffCopy[1]}</button>
     )
 }

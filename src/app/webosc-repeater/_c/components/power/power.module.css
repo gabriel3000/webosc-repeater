@@ -1,5 +1,6 @@
 .power {
-    width: 60px;
+    font-size: 1rem;
+    text-transform: uppercase;
     height: 30px;
     color: #808080;
     background-color: #C0C0C0; /* Gray */
@@ -9,6 +10,8 @@
     border-right: 2px solid #fff;
     cursor: pointer;
     outline: none;
+    padding: 3px 10px;
+    min-width: 60px;
 }
     
 .power.ON {

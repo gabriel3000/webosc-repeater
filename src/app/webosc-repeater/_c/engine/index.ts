@@ -11,6 +11,7 @@ class engine {
     knobData: AllInstruments | undefined;
     intervals!: any[];
     tape: TapeDelay | undefined;
+
     constructor() {
         if (typeof window === 'undefined') {
             return;
@@ -26,7 +27,7 @@ class engine {
             this.limiter.release.value = 0.050; // 50ms release
             this.distortion.curve = makeDistortionCurve(400);
             this.distortion.oversample = '4x';
-            this.tape = new TapeDelay(this.AC, 0.4, 0.4, 0.8);
+            this.tape = new TapeDelay(this.AC); // AC, delayTime:number, feedback:number, wetLevel:number
             this.intervals = [
                 null,
                 null,
@@ -118,22 +119,13 @@ class engine {
 
 
             /* tape delay - turn off */
-
-            /*
-
-            if(this.tape) {
+            if(this.tape?.on) {
                 envelope.connect(this.tape.input);
                 this.tape.output.connect(limiter);
             }
-
-            */
-
+            
             limiter.connect(masterGain);
             masterGain.connect(AC.destination);
-        
-
-
-            
 
             oscillator.start(now);
             oscillatorLfo.start(now);

@@ -36,7 +36,7 @@ const SynthModule = ({knobs, instrumentIndex}:SynthModuleSettings) => {
         }
     }
 
-    const handleSliderChangeCallback = (value:number, knobName:string) => {
+    const handleSliderChangeCallback = (value:number, knobName?:string) => {
         const newInstrumentParams:AllInstruments = JSON.parse(JSON.stringify(instrumentParams));
         if(typeof newInstrumentParams === 'object') {
             const obj = newInstrumentParams[instrumentIndex].find((knob:Knob) => {
@@ -78,8 +78,7 @@ const SynthModule = ({knobs, instrumentIndex}:SynthModuleSettings) => {
                                     max: knob.max,
                                     value: sliderValue || knob.value,
                                     step: knob.step,
-                                    knobIndex: knobIndex,
-                                    instrumentIndex: instrumentIndex,
+                                    key: knobIndex,
                                     handleSliderChangeCallback: handleSliderChangeCallback,
                                 }
                             }
