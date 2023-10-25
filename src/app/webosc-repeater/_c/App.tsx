@@ -1,5 +1,6 @@
 "use client"
 import React, { useContext } from 'react';
+import Image from 'next/image'
 import { ReactContext } from './context/ReactContextProvider';
 import SynthModule from './components/synthModule';
 import TapeDelay from './components/tapeDelay';
@@ -23,6 +24,7 @@ export default function App() {
                 })}
                 <TapeDelay />
             </div>
+            <Image src={'/witch_mask.png'} width={200} height={250} alt="witch mask" className={styles.witchMask} />
         </div>
     )
 }
