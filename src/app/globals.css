@@ -1,3 +1,19 @@
+@font-face {
+  font-family: 'SpaceMono-Bold';
+  src: url('/font/SpaceMono-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SpaceMono-BoldItalic';
+  src: url('/font/SpaceMono-BoldItalic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SpaceMono-Italic';
+  src: url('/font/SpaceMono-Italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SpaceMono-Regular';
+  src: url('/font/SpaceMono-Regular.ttf') format('truetype');
+}
 * {
   box-sizing: border-box;
   padding: 0;
@@ -7,6 +23,7 @@
 html,
 body {
   overflow-x: hidden;
+  font-family: SpaceMono-Regular, monospace;
 }
 
 body {

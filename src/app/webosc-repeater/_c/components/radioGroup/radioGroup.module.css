@@ -7,10 +7,6 @@
 }
 
 .radio-group-option input:checked + label {
-    border-top: 2px solid #fff; /* Darker Gray */
-    border-left: 2px solid #fff; /* Darker Gray */
-    border-bottom: 2px solid #5ed55e;
-    border-right: 2px solid #5ed55e;
     background-color: lightgreen;
     color: #fff;
     text-shadow: 1px 1px 3px #5ed55e;
@@ -18,13 +14,16 @@
 }
 
 .radio-group-option label {
-    padding: 2px 4px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    height: 30px;
     color: #808080;
     background-color: #C0C0C0; /* Gray */
-    border-top: 2px solid #808080; /* Darker Gray */
-    border-left: 2px solid #808080; /* Darker Gray */
-    border-bottom: 2px solid #fff;
-    border-right: 2px solid #fff;
     cursor: pointer;
     outline: none;
+    padding: 3px 10px;
+    min-width: 60px;
+    border: none;
+    display: inline-block;
+    margin: 0 3px 3px 0;
 }

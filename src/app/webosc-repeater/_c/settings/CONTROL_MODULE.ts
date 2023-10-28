@@ -34,7 +34,7 @@ const CONTROL_MODULE = [
         type: 'slider',
         labelContent: 'interval',
         value: 1000,
-        min: 0,
+        min: 1,
         max: 3000,
         step: 1,
     },

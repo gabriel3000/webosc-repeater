@@ -25,9 +25,8 @@ const MainDestinationControls = () => {
     }, [instrumentParams]);
 
     return (
-        <div className={styles.wrapper}>
+        <div className={`${styles.wrapper} ${!power && styles.off}`}>
             <div className={`${styles.killAll} ${commonStyles.defaultPanelColoring} ${power ? styles.instrumentIsOn : null}`}>
-                <span>Kill All</span>
                 <Power settings={{
                     powerClickHandler: () => { 
                         setPower(!power)
@@ -44,6 +43,7 @@ const MainDestinationControls = () => {
                         setInstrumentParams(newInstrumentParams);
                     },
                     power: power,
+                    powerCopy: [ 'kill all', 'kill all: off' ],
                 }} />
             </div>
         </div>
