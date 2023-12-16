@@ -36,7 +36,7 @@ export default function Slider({settings}:SliderSettings) {
 
     return (
         <div className={style.sliderWrap} key={key}>
-            <label className={style.sliderLabel} htmlFor={`slider-${id}`}><span>{labelContent}</span><span>{localValue}</span></label>
+            <label className={style.sliderLabel} htmlFor={`slider-${id}`}><span>{labelContent}</span><input className={style.input} type="number" value={localValue} step={step} onChange={handleChange}/></label>
             <input className={style.slider} type="range" max={max} min={min} step={step} value={localValue} onChange={handleChange} id={`slider-${id}`} />
         </div>
     )
