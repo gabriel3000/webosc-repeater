@@ -23,7 +23,7 @@ export default function App() {
                         />
                     )
                 })}
-                <TapeDelay />
+                {/* <TapeDelay /> */}
             </div>
             <Image src={'/witch_mask.png'} width={200} height={250} alt="witch mask" className={styles.witchMask} />
         </div>

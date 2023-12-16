@@ -1,6 +1,7 @@
 import { makeDistortionCurve } from './makeDistortionCurve';
 import TapeDelay from './tapeDelayClass';
 import { InstrumentKnobs, AllInstruments } from '../types';
+import { makeResonanceCurve } from './makeResonanceCurve';
 
 class engine {
     AC!: AudioContext;
@@ -11,6 +12,7 @@ class engine {
     knobData: AllInstruments | undefined;
     intervals!: any[];
     tape: TapeDelay | undefined;
+    crfilter: BiquadFilterNode | undefined;
 
     constructor() {
         if (typeof window === 'undefined') {
@@ -20,6 +22,13 @@ class engine {
             this.limiter = this.AC.createDynamicsCompressor();
             this.masterGain = this.AC.createGain();
             this.distortion = this.AC.createWaveShaper();
+
+            this.crfilter = this.AC.createBiquadFilter();
+            this.crfilter.type = 'highpass'; // Use a low-pass filter for a brighter sound
+            this.crfilter.frequency.value = 1000; // Set the cutoff frequency of the filter (in Hz)
+            this.crfilter.gain.value = 1; // Set the gain of the filter (in dB)
+            this.crfilter.Q.value = 10; // Set the Q factor of the filter (unitless)
+
             this.limiter.threshold.value = -6; // this is the pitfall, leave some headroom
             this.limiter.knee.value = 0.0; // brute force
             this.limiter.ratio.value = 20.0; // max compression
@@ -60,6 +69,8 @@ class engine {
                 freq1,
                 freq2,
                 freq3,
+                cutoff,
+                resonance
             } = lookup as {
                 lfoFrequency: number;
                 lfoGain: number;
@@ -72,6 +83,8 @@ class engine {
                 freq1: number;
                 freq2: number;
                 freq3: number;
+                resonance: number;
+                cutoff: number;
             };
 
             const AC = this.AC;
@@ -88,11 +101,18 @@ class engine {
             const lfoGainNode = AC.createGain();
             const oscillator = AC.createOscillator();
             const oscillatorLfo = AC.createOscillator();
+
+            const saturate = AC.createWaveShaper();
+            saturate.curve = makeResonanceCurve();
+            saturate.oversample = 'none';
         
             oscillatorLfo.frequency.value = lfoFrequency;
             lfoGainNode.gain.value = lfoGain;
+
             oscillatorLfo.connect(lfoGainNode);
             lfoGainNode.connect(gainNode.gain);
+
+
             oscillator.connect(gainNode);
 
             // https://teropa.info/blog/2016/08/10/frequency-and-pitch <--- this is a good read
@@ -111,19 +131,33 @@ class engine {
             envelope.gain.linearRampToValueAtTime(gain, now + attack);
             envelope.gain.linearRampToValueAtTime(gain, now + attack + sustain);
             envelope.gain.linearRampToValueAtTime(0, now + attack + sustain + decay);
-        
-            // gainNode.connect(distortion);
-            // lfoGainNode.connect(distortion);
-            // distortion.connect(envelope);
             envelope.connect(limiter);
 
-
             /* tape delay - turn off */
+            
+            /**
+             * 
+             *     osc.connect(gain);
+    gain.connect(filter);
+    filter.connect(saturate);
+    saturate.connect(dynamics);
+    dynamics.connect(speaker);
+             * 
+             */
+            if(this.crfilter) {
+                this.crfilter.frequency.value = cutoff;
+                this.crfilter.Q.value = resonance;
+                envelope.connect(this.crfilter);
+                this.crfilter.connect(saturate);
+                saturate.connect(limiter);
+            }
+
             if(this.tape?.on) {
                 envelope.connect(this.tape.input);
                 this.tape.output.connect(limiter);
             }
-            
+
+
             limiter.connect(masterGain);
             masterGain.connect(AC.destination);
 
@@ -148,15 +182,17 @@ class engine {
         if(i === undefined) return;
         if(this.knobData === undefined) return;
         const instrument = this.knobData[i];
-        const interval = instrument.find((knob) => { return knob.knob === 'interval' })?.value
-        const numberInterval = parseInt(interval ? interval.toString() : '0');
+        const BPM = instrument.find((knob) => { return knob.knob === 'BPM' })?.value
+        const numberBPM = parseInt(BPM ? BPM.toString() : '0');
 
-        if(interval === undefined) return;
+        const BPMInterval = 60000 / numberBPM;
+
+        if(BPMInterval === undefined) return;
 
         this.intervals[i] = setTimeout(() => {
             this.play(i);
             this.schedule(i);
-        }, numberInterval);
+        }, BPMInterval);
     }
     stop(i:number) {
         if(i === undefined) return;
@@ -171,3 +207,107 @@ class engine {
     }
 }
 export default new engine();
+
+
+
+/***
+ * 
+ * 
+ * 
+ * var AudioContext = window.AudioContext || window.webkitAudioContext;
+var context = new AudioContext();
+var speaker = context.destination;
+
+var minVal= 50;
+var maxVal = context.sampleRate/2;
+var octaves = Math.log(maxVal/minVal)/Math.LN2;
+var mult = Math.pow(2, octaves*($('#res').val() - 1.0));
+var value = maxVal * mult;
+
+var dynamics = context.createDynamicsCompressor();
+dynamics.threshold.value = -85;
+dynamics.knee.value = 40;
+dynamics.ratio.value = 20;
+dynamics.attack.value = 0;
+dynamics.release.value = 0.3;
+
+var saturate = context.createWaveShaper();
+saturate.curve = curve();
+saturate.oversample = 'none';
+
+
+var gain = context.createGain();
+gain.gain.value = 0.5;
+
+var filter = context.createBiquadFilter();
+filter.frequency.value = 100;
+
+function curve() { 
+      let n_samples = 8192,
+          ws_table = new Float32Array(n_samples),
+          i,
+          x;
+      for (i = 0; i < n_samples; i++) {
+          x = i * 2 / n_samples - 1;
+          if (x < -0.08905) {
+              ws_table[i] = (-3 / 4) * (1 - (Math.pow((1 - (Math.abs(x) - 0.032857)), 12)) + (1 / 3) * (Math.abs(x) - 0.032847)) + 0.01;
+          } else if (x >= -0.08905 && x < 0.320018) {
+              ws_table[i] = (-6.153 * (x * x)) + 3.9375 * x;
+          } else {
+              ws_table[i] = 0.630035;
+          }
+      }
+      return ws_table;
+  }
+
+
+
+
+var osc;
+var isReal = false;
+function create() {
+  if(isReal){
+    return
+  }else {
+    isReal = true;
+    osc = context.createOscillator();
+    osc.type = 'sawtooth';
+    osc.frequency.value = 111;
+    osc.connect(gain);
+    gain.connect(filter);
+    filter.connect(saturate);
+    saturate.connect(dynamics);
+    dynamics.connect(speaker);
+  }
+
+}
+
+
+$('#play').on('click', function(){
+  create();
+  osc.start(0);
+});
+$('#stop').on('click', function(){
+  // osc.stop(0);
+  osc.disconnect();
+  isReal = false;
+});
+
+$('#cutoff').on('input',function(){
+  var cut = $('#cutoff').val();
+  filter.frequency.value = (cut);
+  $('#cutoff-val').html(cut);
+});
+
+$('#res').on('input', function(){
+			var res = $('#res').val();
+			filter.Q.value = res;
+			$('#res-id').html(res);
+		});
+
+
+
+ * 
+ * 
+ * 
+ */

@@ -9,7 +9,7 @@ const CONTROL_MODULE = [
         knob: 'wave',
         type: 'radio',
         labelContent: 'wave',
-        value: 'sine',
+        value: 'triangle',
         radios: [
             {
                 label: 'sine',
@@ -30,10 +30,10 @@ const CONTROL_MODULE = [
         ],
     },
     {
-        knob: 'interval',
+        knob: 'BPM',
         type: 'slider',
-        labelContent: 'interval',
-        value: 1000,
+        labelContent: 'BPM',
+        value: 145,
         min: 1,
         max: 3000,
         step: 1,
@@ -91,6 +91,24 @@ const CONTROL_MODULE = [
         min: 0,
         max: 1,
         step: 0.01,
+    },
+    {
+        knob: 'resonance',
+        labelContent: 'resonance',
+        type: 'slider',
+        value: 10,
+        min: 0,
+        max: 50,
+        step: 1,
+    },
+    {
+        knob: 'cutoff',
+        labelContent: 'Cut Off',
+        type: 'slider',
+        value: 1000,
+        min: 0,
+        max: 3000,
+        step: 1,
     },
     {
         knob: 'attack',
