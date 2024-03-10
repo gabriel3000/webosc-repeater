@@ -23,11 +23,11 @@ class engine {
             this.masterGain = this.AC.createGain();
             this.distortion = this.AC.createWaveShaper();
 
-            this.crfilter = this.AC.createBiquadFilter();
-            this.crfilter.type = 'highpass'; // Use a low-pass filter for a brighter sound
-            this.crfilter.frequency.value = 1000; // Set the cutoff frequency of the filter (in Hz)
-            this.crfilter.gain.value = 1; // Set the gain of the filter (in dB)
-            this.crfilter.Q.value = 10; // Set the Q factor of the filter (unitless)
+            // this.crfilter = this.AC.createBiquadFilter();
+            // this.crfilter.type = 'highpass'; // Use a low-pass filter for a brighter sound
+            // this.crfilter.frequency.value = 1000; // Set the cutoff frequency of the filter (in Hz)
+            // this.crfilter.gain.value = 1; // Set the gain of the filter (in dB)
+            // this.crfilter.Q.value = 10; // Set the Q factor of the filter (unitless)
 
             this.limiter.threshold.value = -6; // this is the pitfall, leave some headroom
             this.limiter.knee.value = 0.0; // brute force
@@ -144,13 +144,13 @@ class engine {
     dynamics.connect(speaker);
              * 
              */
-            if(this.crfilter) {
-                this.crfilter.frequency.value = cutoff;
-                this.crfilter.Q.value = resonance;
-                envelope.connect(this.crfilter);
-                this.crfilter.connect(saturate);
-                saturate.connect(limiter);
-            }
+            // if(this.crfilter) {
+            //     this.crfilter.frequency.value = cutoff;
+            //     this.crfilter.Q.value = resonance;
+            //     envelope.connect(this.crfilter);
+            //     this.crfilter.connect(saturate);
+            //     saturate.connect(limiter);
+            // }
 
             if(this.tape?.on) {
                 envelope.connect(this.tape.input);

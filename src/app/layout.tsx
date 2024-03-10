@@ -1,13 +1,13 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Space_Mono } from 'next/font/google'
+import { Cabin } from 'next/font/google'
 
 export const metadata: Metadata = {
   title: 'Gabriel Jablanczy',
   description: 'Gabriel Jablanczy\'s personal website',
 }
 
-const spaceMonoFont = Space_Mono({
+const cabinFont = Cabin({
   weight: '400',
   subsets: ['latin'],
 })
@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={spaceMonoFont.className}>{children}</body>
+      <body className={cabinFont.className}>{children}</body>
     </html>
   )
 }

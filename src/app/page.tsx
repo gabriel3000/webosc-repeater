@@ -20,7 +20,7 @@ export default function Home() {
 
                         <div className={styles.job}>
                             <h3>
-                            <a href="http://www.isobar.com/us/home" target="_blank">Isobar</a><span> 2014-2017</span>
+                            <a href="http://www.isobar.com/us/home" target="_blank">Isobar / Dentsu</a><span> 2014-2017</span>
                             </h3>
                             <p>Award winning online marketing and enterprise level e-commerce experiences.<br/>Accounts: <a href="https://www.cinemax.com/" target="_blank">Cinemax,</a> Adidas, Lego, Royal Caribbean, <a href="https://exoticcars.enterprise.com/en/home.html" target="_blank">Enterprise</a></p>
                             {/* <div className="awards">
