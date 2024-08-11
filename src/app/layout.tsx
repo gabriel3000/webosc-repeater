@@ -4,7 +4,7 @@ import { Cabin } from 'next/font/google'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.gabrieljablanczy.com'),
-  title: 'Gabriel Jablanczy | Fontend Web Developer',
+  title: 'Gabriel Jablanczy | Frontend Web Developer',
   description: 'Proficient in many technologies from TypeScript to CSS. Site-Speed Optimization and Privacy Compliance expert.',
   openGraph: {
     images: ['/portfolio-site-og-image-meta.png'],
